@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "Miki-Pad",
+    "slug": "miki-pad",
+    "version": "0.0.0",
+    "icon": "./src/assets/images/icon.png",
+    "scheme": "com.miki-pad",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./src/assets/images/splash.png",
+      "resizeMode": "cover"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "package": "com.miki.pad",
+      "versionCode": 0,
+      "icon": "./src/assets/images/icon.png"
+    },
+    "ios": {
+      "buildNumber": "0",
+      "supportsTablet": false,
+      "bundleIdentifier": "com.miki.pad",
+      "icon": "./src/assets/images/icon.png"
+    },
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  }
+}

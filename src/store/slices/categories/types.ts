@@ -1,0 +1,10 @@
+import { InitialState } from '../../types/store';
+
+export interface CategoryDto {
+  id: number;
+  name: string;
+  description: string;
+  image: string;
+}
+
+export type InitialStateDto = InitialState<CategoryDto[] | null>;
