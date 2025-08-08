@@ -8,6 +8,8 @@ import MKFlat from 'modules/MKFlat';
 import MKListItem from 'modules/MKListItem';
 import AlbumItem from './item';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import AppHeader from 'containers/AppHeader';
+import Intl from 'services/intl';
 
 const AlbumsScreen: FC<NativeStackScreenProps<{}>> = () => {
   const dispatch = useAppDispatch();
@@ -24,14 +26,16 @@ const AlbumsScreen: FC<NativeStackScreenProps<{}>> = () => {
 
   return (
     <MKScreen>
-      <MKScreen.Header />
+      <MKScreen.Header>
+        <AppHeader title={Intl.t('screens.albums.header')} back />
+      </MKScreen.Header>
       <MKScreen.Body>
         <MKFlat<AlbumDto>
-          loading={loading}
+          loading={loading.isPending}
           sections={[
             {
-              data: albums || []
-            }
+              data: albums ?? [],
+            },
           ]}
           renderItem={({ item }) => (
             <MKListItem

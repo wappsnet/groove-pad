@@ -20,6 +20,7 @@ export const MKThemeStyles = {
   mdGap: 15,
   lgGap: 20,
   xlGap: 35,
+  xxlGap: 50,
 
   // margins
   xsMargin: 5,
@@ -55,40 +56,40 @@ export const MKThemeStyles = {
     shadowColor: 'rgba(0, 0, 0, 0.3)',
     shadowOffset: {
       width: 1,
-      height: 1
+      height: 1,
     },
     shadowOpacity: 0.5,
     shadowRadius: 3,
-    elevation: 3
+    elevation: 3,
   },
   shadowMild: {
     shadowColor: 'rgba(0, 0, 0, 0.3)',
     shadowOffset: {
       width: 3,
-      height: 3
+      height: 3,
     },
     shadowOpacity: 0.5,
     shadowRadius: 5,
-    elevation: 2
+    elevation: 2,
   },
   shadowLow: {
     shadowColor: 'rgba(0, 0, 0, 0.3)',
     shadowOffset: {
       width: 1,
-      height: 1
+      height: 1,
     },
     shadowOpacity: 0.5,
     shadowRadius: 5,
-    elevation: 1
+    elevation: 1,
   },
   shadowDark: {
     shadowColor: 'rgba(0, 0, 0, 0.7)',
     shadowOffset: {
       width: 3,
-      height: 3
+      height: 3,
     },
     shadowOpacity: 0.7,
     shadowRadius: 5,
-    elevation: 5
-  }
+    elevation: 5,
+  },
 };

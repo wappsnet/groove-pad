@@ -1,7 +1,7 @@
-import { AuthorDto } from 'store/slices/authors/types';
-import { AlbumDto } from '../albums/types';
-import { CategoryDto } from '../categories/types';
-import { InitialState } from '../../types/store';
+import { AuthorDto } from "store/slices/authors/types";
+import { AlbumDto } from "../albums/types";
+import { CategoryDto } from "../categories/types";
+import { InitialState } from "../../types";
 
 export interface MusicDto {
   id: number;

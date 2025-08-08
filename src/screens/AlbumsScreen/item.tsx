@@ -1,24 +1,27 @@
-import React, { FC } from 'react';
-import { AlbumDto } from 'store/slices/albums/types';
-import { Text, View } from 'modules/MKTypo';
-import BkgImage from 'modules/MKImage';
-import { styles } from './styles';
+import { FC } from "react";
+import { AlbumDto } from "store/slices/albums/types";
+import MKTypo from "modules/MKTypo";
+import BkgImage from "modules/MKImage";
+import MKView from "modules/MKView";
+import { styles } from "./styles";
 
 const AlbumItem: FC<AlbumDto> = ({ name, authors, description, image }) => {
   return (
-    <View style={styles.container}>
+    <MKView style={styles.container}>
       <BkgImage
         style={styles.image}
         source={{
-          uri: image
+          uri: image,
         }}
       />
-      <View style={styles.info}>
-        <Text type="h5">{name}</Text>
-        <Text type="h6">{authors.map((author) => author.name).join(',')}</Text>
-        <Text type="p">{description.substring(0, 40).concat('...')}</Text>
-      </View>
-    </View>
+      <MKView style={styles.info}>
+        <MKTypo type="h5">{name}</MKTypo>
+        <MKTypo type="h6">
+          {authors.map((author) => author.name).join(",")}
+        </MKTypo>
+        <MKTypo type="p">{description.substring(0, 40).concat("...")}</MKTypo>
+      </MKView>
+    </MKView>
   );
 };
 

@@ -1,7 +1,7 @@
-import { InitialState } from 'store/types/store';
+import { InitialState } from "store/types";
 
 export enum LanguagesEnum {
-  En = 'en'
+  En = "en",
 }
 
 export interface TipDto {

@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import _ from 'lodash';
-import { StoreLoadingEnum } from 'store/types/store';
+import { MKApiError, StoreLoadingEnum } from 'store/types';
+import { createApiError, createExtraReducer, getSliceLoadingState } from 'store/helpers';
 import { EffectDto, InitialStateDto } from './types';
-import api from './api';
+import { EffectsApi } from './api';
 
 /**
  * Initial State
@@ -11,16 +11,23 @@ import api from './api';
 const initialState: InitialStateDto = {
   loading: StoreLoadingEnum.idle,
   error: null,
-  data: null
+  data: null,
 };
 
 /**
  * Async Actions
  */
-export const getEffectsThunk = createAsyncThunk<EffectDto[]>('effects/get', async () => {
-  const response = await api.query();
-  return response.data;
-});
+export const getEffectsThunk = createAsyncThunk<EffectDto[], void, { rejectValue: MKApiError }>(
+  'effects/get',
+  async (_, thunkAPI) => {
+    try {
+      const response = await EffectsApi.query();
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(createApiError(e));
+    }
+  },
+);
 
 /**
  * Slices
@@ -30,23 +37,13 @@ export const effectsSlice = createSlice({
   name: 'effects',
   initialState,
   reducers: {},
-  extraReducers: {
-    // get file
-    [`${getEffectsThunk.pending}`]: (state) => {
-      state.loading = StoreLoadingEnum.pending;
-    },
-    [`${getEffectsThunk.fulfilled}`]: (state, action) => {
-      state.loading = StoreLoadingEnum.loaded;
-      state.data = _.unionBy(state.data || [], action.payload, 'id');
-    },
-    [`${getEffectsThunk.rejected}`]: (state) => {
-      state.loading = StoreLoadingEnum.loaded;
-    }
-  }
+  extraReducers: (builder) => {
+    createExtraReducer(builder, getEffectsThunk);
+  },
 });
 
 /**
  * Selectors
  */
-export const getEffects = (state: InitialStateDto): EffectDto[] | null => state.data || null;
-export const getLoading = (state: InitialStateDto): boolean => state.loading === StoreLoadingEnum.pending;
+export const getEffects = (state: InitialStateDto) => state.data || null;
+export const getLoading = (state: InitialStateDto) => getSliceLoadingState(state.loading);

@@ -1,5 +1,5 @@
-import { CategoryDto } from 'store/slices/categories/types';
-import { InitialState } from '../../types/store';
+import { CategoryDto } from "store/slices/categories/types";
+import { InitialState } from "../../types";
 
 export interface EffectDto {
   id: number;

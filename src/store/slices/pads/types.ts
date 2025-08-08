@@ -1,5 +1,8 @@
-import { InitialState } from 'store/types/store';
+import { InitialState } from 'store/types';
 
-export type PadDto = any;
+export interface PadDto {
+  id: number;
+  name: string;
+}
 
 export type InitialStateDto = InitialState<PadDto[] | null>;

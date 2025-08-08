@@ -1,9 +1,8 @@
-import { AxiosResponse } from 'axios';
 import { MKApi } from 'store/api';
 import { PadDto } from './types';
 
-export default {
-  async query(): Promise<AxiosResponse<PadDto[]>> {
-    return await MKApi.get('/mocks/pads.json');
-  }
+export const PadsApi = {
+  query: async () => {
+    return await MKApi.get<PadDto>('/mocks/pads.json');
+  },
 };

@@ -1,33 +1,44 @@
 import { FC } from 'react';
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 import MKTypo from 'modules/MKTypo';
 import MKButton from 'modules/MKButton';
 import MKIcon from 'modules/MKIcon';
+import MKView from 'modules/MKView';
 import { styles } from './styles';
+import { useNavigation } from '@react-navigation/core';
 
 type AppHeaderProps = {
   title?: string;
+  back?: boolean;
 };
 
-const AppHeader: FC<AppHeaderProps> = ({ title }) => {
+const AppHeader: FC<AppHeaderProps> = ({ title, back = false }) => {
+  const navigation = useNavigation();
   return (
-    <View style={styles.container}>
-      <View style={styles.left}>
-        <MKButton type="tertiary">
-          <MKIcon.Awesome icon="arrow-left" />
-        </MKButton>
-      </View>
+    <MKView style={styles.container}>
+      <MKView style={styles.left}>
+        {back && (
+          <MKButton
+            type="tertiary"
+            onPress={() => {
+              navigation.goBack();
+            }}
+          >
+            <MKIcon.Awesome icon="arrow-left" />
+          </MKButton>
+        )}
+      </MKView>
       <Text style={styles.middle}>
         <MKTypo type="h1" truncate>
           {title}
         </MKTypo>
       </Text>
-      <View style={styles.right}>
+      <MKView style={styles.right}>
         <MKButton type="tertiary">
           <MKIcon.Awesome icon="cog" />
         </MKButton>
-      </View>
-    </View>
+      </MKView>
+    </MKView>
   );
 };
 

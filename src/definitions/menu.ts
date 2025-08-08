@@ -11,17 +11,17 @@ export const MAIN_MENU = [
   {
     title: Intl.t("screens.libraries.header"),
     icon: Assets.icons.libraries,
-    screen: ROUTES.albums.name,
+    screen: ROUTES.libraries.name,
   },
   {
     title: Intl.t("screens.pads.header"),
     icon: Assets.icons.pads,
-    screen: ROUTES.albums.name,
+    screen: ROUTES.pads.name,
   },
   {
     title: Intl.t("screens.musics.header"),
     icon: Assets.icons.musics,
-    screen: ROUTES.albums.name,
+    screen: ROUTES.music.name,
   },
 ];
 

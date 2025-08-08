@@ -1,14 +1,14 @@
-import { FC, useRef } from 'react';
-import { Video, VideoProps } from 'expo-av';
-import { View } from 'react-native';
-import { styles } from './styles';
+import { FC, useRef } from "react";
+import { Video, VideoProps } from "expo-av";
+import { styles } from "./styles";
+import { View } from "react-native";
 
 type MVideoProps = {
   video: VideoProps;
-  resizeMode: 'contain' | 'cover';
+  resizeMode: "contain" | "cover";
 };
 
-const MVideo: FC<MVideoProps> = ({ video, resizeMode = 'contain' }) => {
+const MVideo: FC<MVideoProps> = ({ video, resizeMode = "contain" }) => {
   const ref = useRef(null);
 
   console.log(resizeMode);

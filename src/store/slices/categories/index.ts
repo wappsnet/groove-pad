@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import _ from 'lodash';
-import { StoreLoadingEnum } from 'store/types/store';
+import { MKApiError, StoreLoadingEnum } from 'store/types';
+import { createApiError, createExtraReducer, getSliceLoadingState } from 'store/helpers';
 import { CategoryDto, InitialStateDto } from './types';
-import api from './api';
+import { CategoriesApi } from './api';
 
 /**
  * Initial State
@@ -11,16 +11,23 @@ import api from './api';
 const initialState: InitialStateDto = {
   loading: StoreLoadingEnum.idle,
   error: null,
-  data: null
+  data: null,
 };
 
 /**
  * Async Actions
  */
-export const getCategoriesThunk = createAsyncThunk<CategoryDto[]>('categories/get', async () => {
-  const response = await api.query();
-  return response.data;
-});
+export const getCategoriesThunk = createAsyncThunk<CategoryDto[], void, { rejectValue: MKApiError }>(
+  'categories/get',
+  async (_, thunkAPI) => {
+    try {
+      const response = await CategoriesApi.query();
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(createApiError(e));
+    }
+  },
+);
 
 /**
  * Slices
@@ -30,23 +37,13 @@ export const categoriesSlice = createSlice({
   name: 'categories',
   initialState,
   reducers: {},
-  extraReducers: {
-    // get file
-    [`${getCategoriesThunk.pending}`]: (state) => {
-      state.loading = StoreLoadingEnum.pending;
-    },
-    [`${getCategoriesThunk.fulfilled}`]: (state, action) => {
-      state.loading = StoreLoadingEnum.loaded;
-      state.data = _.unionBy(state.data || [], action.payload, 'id');
-    },
-    [`${getCategoriesThunk.rejected}`]: (state) => {
-      state.loading = StoreLoadingEnum.loaded;
-    }
-  }
+  extraReducers: (builder) => {
+    createExtraReducer(builder, getCategoriesThunk);
+  },
 });
 
 /**
  * Selectors
  */
-export const getCategories = (state: InitialStateDto): CategoryDto[] | null => state.data || null;
-export const getLoading = (state: InitialStateDto): boolean => state.loading === StoreLoadingEnum.pending;
+export const getCategories = (state: InitialStateDto) => state.data || null;
+export const getLoading = (state: InitialStateDto) => getSliceLoadingState(state.loading);

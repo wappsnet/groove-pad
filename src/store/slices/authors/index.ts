@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import _ from 'lodash';
-import { StoreLoadingEnum } from 'store/types/store';
+import { MKApiError, StoreLoadingEnum } from 'store/types';
 import { AuthorDto, InitialStateDto } from './types';
-import api from './api';
+import { createApiError, createExtraReducer, getSliceLoadingState } from 'store/helpers';
+import { AuthorsApi } from './api';
 
 /**
  * Initial State
@@ -11,16 +11,23 @@ import api from './api';
 const initialState: InitialStateDto = {
   loading: StoreLoadingEnum.idle,
   error: null,
-  data: null
+  data: null,
 };
 
 /**
  * Async Actions
  */
-export const getAuthorsThunk = createAsyncThunk<AuthorDto[]>('authors/query', async () => {
-  const response = await api.query();
-  return response.data;
-});
+export const getAuthorsThunk = createAsyncThunk<AuthorDto[], void, { rejectValue: MKApiError }>(
+  'authors/query',
+  async (_, thankAPI) => {
+    try {
+      const response = await AuthorsApi.query();
+      return response.data;
+    } catch (e) {
+      return thankAPI.rejectWithValue(createApiError(e));
+    }
+  },
+);
 
 /**
  * Slices
@@ -30,23 +37,13 @@ export const authorsSlice = createSlice({
   name: 'authors',
   initialState,
   reducers: {},
-  extraReducers: {
-    // get file
-    [`${getAuthorsThunk.pending}`]: (state) => {
-      state.loading = StoreLoadingEnum.pending;
-    },
-    [`${getAuthorsThunk.fulfilled}`]: (state, action) => {
-      state.loading = StoreLoadingEnum.loaded;
-      state.data = _.unionBy(state.data || [], action.payload, 'id');
-    },
-    [`${getAuthorsThunk.rejected}`]: (state) => {
-      state.loading = StoreLoadingEnum.loaded;
-    }
-  }
+  extraReducers: (builder) => {
+    createExtraReducer(builder, getAuthorsThunk);
+  },
 });
 
 /**
  * Selectors
  */
-export const getAuthors = (state: InitialStateDto): AuthorDto[] | null => state.data || null;
-export const getLoading = (state: InitialStateDto): boolean => state.loading === StoreLoadingEnum.pending;
+export const getAuthors = (state: InitialStateDto) => state.data || null;
+export const getLoading = (state: InitialStateDto) => getSliceLoadingState(state.loading);

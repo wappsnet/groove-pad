@@ -1,9 +1,10 @@
-import { FC } from 'react';
-import { Text, View } from 'react-native';
-import MKTypo from 'modules/MKTypo';
-import MKButton from 'modules/MKButton';
-import MKIcon from 'modules/MKIcon';
-import { styles } from './styles';
+import { FC } from "react";
+import { Text } from "react-native";
+import MKTypo from "modules/MKTypo";
+import MKView from "modules/MKView";
+import MKButton from "modules/MKButton";
+import MKIcon from "modules/MKIcon";
+import { styles } from "./styles";
 
 type AppHeaderProps = {
   title?: string;
@@ -11,21 +12,21 @@ type AppHeaderProps = {
 
 const AppHeader: FC<AppHeaderProps> = ({ title }) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.left}>
+    <MKView style={styles.container}>
+      <MKView style={styles.left}>
         <MKButton type="light">
           <MKIcon.Awesome icon="arrow-left" />
         </MKButton>
-      </View>
+      </MKView>
       <Text style={styles.middle}>
         <MKTypo type="h1">{title}</MKTypo>
       </Text>
-      <View style={styles.right}>
+      <MKView style={styles.right}>
         <MKButton type="light">
           <MKIcon.Awesome icon="cog" />
         </MKButton>
-      </View>
-    </View>
+      </MKView>
+    </MKView>
   );
 };
 

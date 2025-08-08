@@ -7,13 +7,16 @@ const THUMB_SIZE = 20;
 export const styles = StyleSheet.create({
   container: {
     height: THUMB_SIZE,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    position: 'relative',
   },
   track: {
     position: 'absolute',
+    left: 0,
+    right: 0,
     height: TRACK_SIZE,
     borderRadius: TRACK_SIZE / 2,
-    backgroundColor: MKThemeStyles.colorBrandTertiary
+    backgroundColor: MKThemeStyles.colorBrandTertiary,
   },
   thumb: {
     position: 'absolute',
@@ -21,7 +24,7 @@ export const styles = StyleSheet.create({
     height: THUMB_SIZE,
     marginLeft: -THUMB_SIZE / 2,
     borderRadius: THUMB_SIZE / 2,
-    backgroundColor: MKThemeStyles.colorBrandPrimary
+    backgroundColor: MKThemeStyles.colorBrandPrimary,
   },
   touchArea: {
     position: 'absolute',
@@ -29,7 +32,7 @@ export const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    bottom: 0
+    bottom: 0,
   },
   activeArea: {
     top: 0,
@@ -37,6 +40,6 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: MKThemeStyles.colorBrandPrimary,
     borderRadius: TRACK_SIZE / 2,
-    zIndex: 1
-  }
+    zIndex: 1,
+  },
 });

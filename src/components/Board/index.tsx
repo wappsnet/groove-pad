@@ -1,8 +1,8 @@
-import { FC } from 'react';
-import { PadDto } from 'store/slices/pads/types';
-import { View } from 'modules/MKTypo';
-import Pad from 'components/Pad';
-import { styles } from './styles';
+import { FC } from "react";
+import { PadDto } from "store/slices/pads/types";
+import MKView from "modules/MKView";
+import Pad from "components/Pad";
+import { styles } from "./styles";
 
 type BoardProps = {
   pads: PadDto[];
@@ -11,18 +11,18 @@ type BoardProps = {
 
 const Board: FC<BoardProps> = ({ pads, pressPad }) => {
   return (
-    <View style={styles.boardContainer}>
+    <MKView style={styles.boardContainer}>
       {pads.map((item) => (
-        <View key={item.id} style={styles.boardItem}>
+        <MKView key={item.id} style={styles.boardItem}>
           <Pad
             onPress={() => {
               pressPad(item.id);
             }}
             {...item}
           />
-        </View>
+        </MKView>
       ))}
-    </View>
+    </MKView>
   );
 };
 

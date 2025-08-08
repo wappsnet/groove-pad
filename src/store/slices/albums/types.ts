@@ -1,5 +1,5 @@
 import { AuthorDto } from 'store/slices/authors/types';
-import { InitialState } from '../../types/store';
+import { InitialState } from 'store/types';
 
 export interface AlbumDto {
   id: number;
@@ -8,4 +8,5 @@ export interface AlbumDto {
   image: string;
   authors: AuthorDto[];
 }
+
 export type InitialStateDto = InitialState<AlbumDto[] | null>;

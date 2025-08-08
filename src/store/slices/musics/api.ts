@@ -1,9 +1,8 @@
-import { AxiosResponse } from 'axios';
 import { MKApi } from 'store/api';
 import { MusicDto } from './types';
 
-export default {
-  async query(): Promise<AxiosResponse<MusicDto[]>> {
-    return await MKApi.get('/mocks/musics.json');
-  }
+export const MusicsApi = {
+  query: async () => {
+    return await MKApi.get<MusicDto[]>('/mocks/musics.json');
+  },
 };

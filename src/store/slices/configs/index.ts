@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { StoreLoadingEnum } from 'store/types/store';
+import { MKApiError, StoreLoadingEnum } from 'store/types';
 import { LanguagesEnum, ConfigsDto, TipDto, InitialStateDto } from './types';
-import api from './api';
+import { ConfigsApi } from './api';
+import { createApiError, createExtraReducer } from 'store/helpers';
 import configs from 'assets/mocks/configs';
 
 /**
@@ -10,20 +11,23 @@ import configs from 'assets/mocks/configs';
 const initialState: InitialStateDto = {
   loading: StoreLoadingEnum.idle,
   error: null,
-  data: configs
+  data: configs,
 };
 
 /**
  * Async Actions
  */
-export const getConfigsThunk = createAsyncThunk<ConfigsDto>('configs/get', async (_, thunkApi) => {
-  try {
-    const response = await api.get();
-    return response.data;
-  } catch (e) {
-    return thunkApi.rejectWithValue(e);
-  }
-});
+export const getConfigsThunk = createAsyncThunk<ConfigsDto, void, { rejectValue: MKApiError }>(
+  'configs/get',
+  async (_, thunkApi) => {
+    try {
+      const response = await ConfigsApi.get();
+      return response.data;
+    } catch (e) {
+      return thunkApi.rejectWithValue(createApiError(e));
+    }
+  },
+);
 
 /**
  * Slices
@@ -32,19 +36,9 @@ export const configsSlice = createSlice({
   name: 'configs',
   initialState,
   reducers: {},
-  extraReducers: {
-    // get file
-    [`${getConfigsThunk.pending}`]: (state) => {
-      state.loading = StoreLoadingEnum.pending;
-    },
-    [`${getConfigsThunk.fulfilled}`]: (state, action) => {
-      state.loading = StoreLoadingEnum.loaded;
-      state.data = action.payload;
-    },
-    [`${getConfigsThunk.rejected}`]: (state) => {
-      state.loading = StoreLoadingEnum.loaded;
-    }
-  }
+  extraReducers: (builder) => {
+    createExtraReducer(builder, getConfigsThunk);
+  },
 });
 
 /**
