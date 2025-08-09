@@ -1,8 +1,10 @@
 import { InitialState } from 'store/types';
 
 export interface PadDto {
-  id: number;
-  name: string;
+  id: string;
+  title: string;
+  icon: '';
+  sound: '';
 }
 
 export type InitialStateDto = InitialState<PadDto[] | null>;

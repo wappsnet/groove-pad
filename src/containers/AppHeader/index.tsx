@@ -7,10 +7,10 @@ import MKView from 'modules/MKView';
 import { styles } from './styles';
 import { useNavigation } from '@react-navigation/core';
 
-type AppHeaderProps = {
+interface AppHeaderProps {
   title?: string;
   back?: boolean;
-};
+}
 
 const AppHeader: FC<AppHeaderProps> = ({ title, back = false }) => {
   const navigation = useNavigation();

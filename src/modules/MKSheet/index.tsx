@@ -40,7 +40,7 @@ const MKSheet = forwardRef<MKSheetRefProps, MKSheetProps>(
       Animated.timing(transform, {
         useNativeDriver: false,
         toValue: Math.min(initialScale, max),
-        duration: duration
+        duration: duration,
       }).start(() => {
         if (initialScale <= 0) {
           setVisible(false);
@@ -53,7 +53,7 @@ const MKSheet = forwardRef<MKSheetRefProps, MKSheetProps>(
       Animated.timing(transform, {
         useNativeDriver: false,
         toValue: 1,
-        duration: duration
+        duration: duration,
       }).start();
     }, [setVisible, transform, duration]);
 
@@ -61,7 +61,7 @@ const MKSheet = forwardRef<MKSheetRefProps, MKSheetProps>(
       Animated.timing(transform, {
         useNativeDriver: false,
         toValue: 0,
-        duration: duration
+        duration: duration,
       }).start(() => {
         setVisible(false);
       });
@@ -69,13 +69,13 @@ const MKSheet = forwardRef<MKSheetRefProps, MKSheetProps>(
 
     useImperativeHandle(ref, () => ({
       hide: hideSheet,
-      open: openSheet
+      open: openSheet,
     }));
 
     const size = transform.interpolate({
       inputRange: [0, Math.min(initialScale, max)],
       outputRange: [0, height * Math.min(initialScale, max)],
-      extrapolate: 'extend'
+      extrapolate: 'extend',
     });
 
     return (
@@ -88,8 +88,8 @@ const MKSheet = forwardRef<MKSheetRefProps, MKSheetProps>(
                   styles.container,
                   {
                     width: width,
-                    height: size
-                  }
+                    height: size,
+                  },
                 ]}
               >
                 <TouchableOpacity activeOpacity={1} style={styles.wrapper}>
@@ -128,7 +128,7 @@ const MKSheet = forwardRef<MKSheetRefProps, MKSheetProps>(
         </MKPortal.Consumer>
       </MKPortal.Provider>
     );
-  }
+  },
 );
 
 MKSheet.displayName = 'MKSheet';

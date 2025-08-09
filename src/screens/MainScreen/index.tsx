@@ -16,8 +16,8 @@ import MKGrid from 'modules/MKGrid';
 import MKButton from 'modules/MKButton';
 import MKSheet from 'modules/MKSheet';
 import AppHeader from 'containers/AppHeader';
-import MKRange from 'modules/MKRange';
 import MKView from 'modules/MKView';
+import MKForm from 'modules/MKForm';
 import { styles } from './styles';
 
 const MainScreen: FC = () => {
@@ -92,7 +92,7 @@ const MainScreen: FC = () => {
             </MKButton>
             <MKGrid.Row>
               <MKGrid.Col size={12}>
-                <MKRange
+                <MKForm.Range
                   val={rangeValue}
                   onChangeValue={(val) => {
                     setRangeValue(val);

@@ -1,12 +1,12 @@
-import { FC } from "react";
-import { PadDto } from "store/slices/pads/types";
-import MKView from "modules/MKView";
-import Pad from "components/Pad";
-import { styles } from "./styles";
+import { FC } from 'react';
+import { PadDto } from 'store/slices/pads/types';
+import MKView from 'modules/MKView';
+import Pad from 'components/Pad';
+import { styles } from './styles';
 
 type BoardProps = {
   pads: PadDto[];
-  pressPad: (id: number) => void;
+  pressPad: (id: string) => void;
 };
 
 const Board: FC<BoardProps> = ({ pads, pressPad }) => {

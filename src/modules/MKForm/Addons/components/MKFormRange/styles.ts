@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { MKThemeStyles } from '../MKTheme/styles';
+import { MKThemeStyles } from '../../../../MKTheme/styles';
 
 const TRACK_SIZE = 4;
 const THUMB_SIZE = 20;

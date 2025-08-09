@@ -9,37 +9,38 @@ export const styles = StyleSheet.create({
     height: '100%',
     position: 'relative',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   menu: {
     width: '100%',
     flex: 1,
-    position: 'relative'
+    position: 'relative',
   },
   menuIcon: {
     width: '100%',
     height: 25,
-    marginVertical: MKThemeStyles.smGap
+    color: theme.colors.primary,
+    marginVertical: MKThemeStyles.smGap,
   },
   indicator: {
     marginVertical: 50,
-    color: theme.colors.indicator
+    color: theme.colors.indicator,
   },
   slider: {
     width: '100%',
-    height: vh(40)
+    height: vh(40),
   },
   sliderItem: {
     width: '100%',
     height: '100%',
     overflow: 'hidden',
-    borderWidth: 1
+    borderWidth: 1,
   },
   sliderImage: {
     width: '100%',
     height: '100%',
     position: 'relative',
     resizeMode: 'center',
-    borderWidth: 1
-  }
+    borderWidth: 1,
+  },
 });

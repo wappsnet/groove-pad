@@ -10,7 +10,7 @@ interface MKCustomIconProps extends ViewProps {
 const MKCustomIcon: FC<MKCustomIconProps> = ({ icon, hitSlop, ...props }) => {
   let xmlIcon = icon;
 
-  xmlIcon = xmlIcon.replace(/colors.fill/g, MKThemeStyles.colorBrandSecondary);
+  xmlIcon = xmlIcon.replace(/colors.fill/g, MKThemeStyles.colorTextSecondary);
   xmlIcon = xmlIcon.replace(/colors.primary/g, MKThemeStyles.colorBrandPrimary);
   xmlIcon = xmlIcon.replace(/colors.secondary/g, MKThemeStyles.colorBrandTertiary);
 

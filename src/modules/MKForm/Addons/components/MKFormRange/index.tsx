@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Animated, Image, View, ViewStyle, ImageURISource } from 'react-native';
 
@@ -30,7 +30,7 @@ const MKRange: FC<MKRangeProps> = ({
   val = 0,
   disabled = false,
   minimumValue = 0,
-  maximumValue = 1,
+  maximumValue = 100,
   step = 0,
   onChangeValue,
   onSlidingStart,
@@ -42,16 +42,16 @@ const MKRange: FC<MKRangeProps> = ({
   const [state, setState] = useState({
     containerSize: {
       width: 0,
-      height: thumbTouchSize
+      height: thumbTouchSize,
     },
     trackSize: {
       width: 0,
-      height: thumbTouchSize
+      height: thumbTouchSize,
     },
     thumbSize: {
       width: thumbTouchSize,
-      height: thumbTouchSize
-    }
+      height: thumbTouchSize,
+    },
   });
   const [value, setValue] = useState(val);
 
@@ -59,19 +59,22 @@ const MKRange: FC<MKRangeProps> = ({
     setValue(val);
   }, [setValue, val]);
 
-  const _getValue = (dx: number) => {
-    const length = state.containerSize.width - state.thumbSize.width;
-    const ratio = dx / length;
+  const _getValue = useCallback(
+    (dx: number) => {
+      const length = state.containerSize.width - state.thumbSize.width;
+      const ratio = dx / length;
 
-    if (step) {
-      return Math.max(
-        minimumValue,
-        Math.min(maximumValue, minimumValue + Math.round((ratio * (maximumValue - minimumValue)) / step) * step)
-      );
-    }
+      if (step) {
+        return Math.max(
+          minimumValue,
+          Math.min(maximumValue, minimumValue + Math.round((ratio * (maximumValue - minimumValue)) / step) * step),
+        );
+      }
 
-    return Math.max(minimumValue, Math.min(maximumValue, ratio * (maximumValue - minimumValue) + minimumValue));
-  };
+      return Math.max(minimumValue, Math.min(maximumValue, ratio * (maximumValue - minimumValue) + minimumValue));
+    },
+    [minimumValue, maximumValue, step, state.containerSize, state.thumbSize],
+  );
 
   const touchOverflowStyle = useMemo(() => {
     const width = Math.max(0, thumbTouchSize - state.thumbSize.width);
@@ -83,7 +86,7 @@ const MKRange: FC<MKRangeProps> = ({
       marginTop: verticalMargin,
       marginBottom: verticalMargin,
       marginLeft: horizontalMargin,
-      marginRight: horizontalMargin
+      marginRight: horizontalMargin,
     };
   }, [thumbTouchSize, state.thumbSize, state.containerSize]);
 
@@ -96,8 +99,8 @@ const MKRange: FC<MKRangeProps> = ({
           ...state,
           containerSize: {
             width: e.nativeEvent.layout.width,
-            height: e.nativeEvent.layout.height
-          }
+            height: e.nativeEvent.layout.height,
+          },
         });
       }}
     >
@@ -108,8 +111,8 @@ const MKRange: FC<MKRangeProps> = ({
             ...state,
             trackSize: {
               width: e.nativeEvent.layout.width,
-              height: e.nativeEvent.layout.height
-            }
+              height: e.nativeEvent.layout.height,
+            },
           });
         }}
       />
@@ -118,8 +121,8 @@ const MKRange: FC<MKRangeProps> = ({
           styles.track,
           trackStyle,
           {
-            width: state.containerSize.width
-          }
+            width: state.containerSize.width,
+          },
         ]}
       >
         {debugTouchArea && (
@@ -128,8 +131,8 @@ const MKRange: FC<MKRangeProps> = ({
               styles.activeArea,
               {
                 width: state.containerSize.width * value,
-                height: state.trackSize.height
-              }
+                height: state.trackSize.height,
+              },
             ]}
             pointerEvents="none"
           />
@@ -142,18 +145,18 @@ const MKRange: FC<MKRangeProps> = ({
           {
             transform: [
               {
-                translateX: state.containerSize.width * value
-              }
-            ]
-          }
+                translateX: state.containerSize.width * value,
+              },
+            ],
+          },
         ]}
         onLayout={(e) => {
           setState({
             ...state,
             thumbSize: {
               width: e.nativeEvent.layout.width,
-              height: e.nativeEvent.layout.height
-            }
+              height: e.nativeEvent.layout.height,
+            },
           });
         }}
       >
@@ -167,6 +170,7 @@ const MKRange: FC<MKRangeProps> = ({
         onStartShouldSetResponder={() => true}
         onMoveShouldSetResponder={() => true}
         onResponderMove={(e) => {
+          console.log(e.nativeEvent.locationX);
           if (disabled) {
             return;
           }

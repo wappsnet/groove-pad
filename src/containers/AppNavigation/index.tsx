@@ -17,12 +17,17 @@ const AppNavigation: FC<{ theme: Theme }> = ({ theme }) => {
         prefixes: [`${APP_ID}://`],
         config: {
           screens: {
-            main: ROUTES.main.name
-          }
-        }
+            main: ROUTES.main.name,
+          },
+        },
       }}
     >
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator
+        screenOptions={{
+          fullScreenGestureEnabled: true,
+          headerShown: false,
+        }}
+      >
         <Stack.Screen name={ROUTES.main.name} component={MainScreen} />
         <Stack.Screen name={ROUTES.albums.name} component={AlbumsScreen} />
       </Stack.Navigator>
