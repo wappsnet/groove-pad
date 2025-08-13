@@ -1,6 +1,9 @@
 import { FC, ReactNode } from 'react';
+
 import { TouchableOpacity, TouchableOpacityProps, Text } from 'react-native';
+
 import MKSpinner from 'modules/MKSpinner';
+
 import { styles } from './styles';
 
 interface ButtonProps extends TouchableOpacityProps {
@@ -30,7 +33,7 @@ const MKButton: FC<ButtonProps> = ({
   }
 
   return (
-    <TouchableOpacity style={buttonStyle} disabled={disabled} {...props}>
+    <TouchableOpacity style={[buttonStyle, style]} disabled={disabled} {...props}>
       {startIcon && <Text style={styles.startIcon}>{startIcon}</Text>}
       {children}
       {endIcon && <Text style={styles.endIcon}>{endIcon}</Text>}

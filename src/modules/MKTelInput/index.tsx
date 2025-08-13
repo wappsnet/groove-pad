@@ -1,6 +1,9 @@
 import React, { FC } from 'react';
+
 import { TextInput, TextInputProps } from 'react-native';
+
 import theme from 'assets/theme';
+
 import { styles } from './styles';
 
 interface MKTelInputProps extends TextInputProps {

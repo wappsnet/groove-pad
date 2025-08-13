@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { MKThemeStyles } from '../../modules/MKTheme/styles';
 
 export const styles = StyleSheet.create({
   container: {
@@ -7,26 +6,26 @@ export const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   left: {
     flex: 1,
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   middle: {
     flex: 1,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    color: MKThemeStyles.colorTextPrimary,
-    textAlign: 'center'
+    alignItems: 'center',
+    textAlign: 'center',
   },
   right: {
     flex: 1,
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-end'
-  }
+    justifyContent: 'flex-end',
+  },
 });

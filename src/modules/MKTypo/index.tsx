@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { Text, TextProps } from 'react-native';
-import { styles } from './styles';
 import { FC } from 'react';
+
+import { Text, TextProps } from 'react-native';
+
+import { styles } from './styles';
 
 interface MKTypoProps extends TextProps {
   type: 'p' | 'label' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'caption';
@@ -19,8 +21,7 @@ const MKTypo: FC<MKTypoProps> = ({
   bold = false,
   style,
   ...props
-}) => {
-  return (
+}) => (
     <Text
       ellipsizeMode={ellipsizeMode}
       numberOfLines={truncate ? 1 : numberOfLines}
@@ -28,6 +29,5 @@ const MKTypo: FC<MKTypoProps> = ({
       {...props}
     />
   );
-};
 
 export default MKTypo;

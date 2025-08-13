@@ -1,4 +1,5 @@
 import { FC, useEffect, useRef } from 'react';
+
 import { Animated, Easing, ViewProps } from 'react-native';
 
 interface MKRotateProps extends ViewProps {
@@ -16,15 +17,15 @@ const MKRotate: FC<MKRotateProps> = ({ children, duration = 1000, active = false
           toValue: 1,
           duration,
           easing: Easing.linear,
-          useNativeDriver: true
-        })
+          useNativeDriver: true,
+        }),
       ).start();
     }
-  }, [active]);
+  }, [active, animatedValue, duration]);
 
   const spin = animatedValue.interpolate({
     inputRange: [0, 1],
-    outputRange: ['0deg', '360deg']
+    outputRange: ['0deg', '360deg'],
   });
 
   return (
@@ -32,9 +33,9 @@ const MKRotate: FC<MKRotateProps> = ({ children, duration = 1000, active = false
       style={{
         transform: [
           {
-            rotate: spin
-          }
-        ]
+            rotate: spin,
+          },
+        ],
       }}
     >
       {children}

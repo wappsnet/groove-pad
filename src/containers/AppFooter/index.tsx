@@ -1,17 +1,19 @@
 import { FC } from "react";
+
 import { Text } from "react-native";
-import MKTypo from "modules/MKTypo";
-import MKView from "modules/MKView";
+
 import MKButton from "modules/MKButton";
 import MKIcon from "modules/MKIcon";
+import MKTypo from "modules/MKTypo";
+import MKView from "modules/MKView";
+
 import { styles } from "./styles";
 
 type AppHeaderProps = {
   title?: string;
 };
 
-const AppHeader: FC<AppHeaderProps> = ({ title }) => {
-  return (
+const AppHeader: FC<AppHeaderProps> = ({ title }) => (
     <MKView style={styles.container}>
       <MKView style={styles.left}>
         <MKButton type="light">
@@ -28,6 +30,5 @@ const AppHeader: FC<AppHeaderProps> = ({ title }) => {
       </MKView>
     </MKView>
   );
-};
 
 export default AppHeader;

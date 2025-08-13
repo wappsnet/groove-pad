@@ -1,5 +1,5 @@
-import { useColorScheme as _useColorScheme } from 'react-native';
 import { DarkTheme, DefaultTheme, Theme } from '@react-navigation/native';
+import { useColorScheme as _useColorScheme } from 'react-native';
 
 // The theme value is always either light or dark, but the built-in
 // type suggests that it can be null. This will not happen in practice, so this

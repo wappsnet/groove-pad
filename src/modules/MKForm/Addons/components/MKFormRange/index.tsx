@@ -1,204 +1,149 @@
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { FC, useState, useRef, useEffect, useCallback, useMemo } from 'react';
 
-import { Animated, Image, View, ViewStyle, ImageURISource } from 'react-native';
+import { View, Animated, PanResponder, ViewStyle, Pressable } from 'react-native';
 
 import { styles } from './styles';
 
-type MKRangeProps = {
-  val?: number;
-  disabled?: boolean;
+interface MKFormRangeProps {
+  value: number;
   minimumValue?: number;
   maximumValue?: number;
   step?: number;
-  thumbTintColor?: string;
-  thumbTouchSize?: number;
+  onValueChange?: (value: number) => void;
   onSlidingStart?: () => void;
-  onSlidingComplete?: () => void;
-  onChangeValue?: (val: number) => void;
-  style?: ViewStyle;
+  onSlidingComplete?: (value: number) => void;
   trackStyle?: ViewStyle;
   thumbStyle?: ViewStyle;
-  thumbImage?: ImageURISource;
-  debugTouchArea?: boolean;
-};
+}
 
-const MKRange: FC<MKRangeProps> = ({
-  thumbImage,
-  style,
-  trackStyle,
-  thumbStyle,
-  val = 0,
-  disabled = false,
+const THUMB_SIZE = 24;
+
+const MKFormRange: FC<MKFormRangeProps> = ({
+  value,
   minimumValue = 0,
   maximumValue = 100,
-  step = 0,
-  onChangeValue,
+  step = 1,
+  onValueChange,
   onSlidingStart,
   onSlidingComplete,
-  thumbTouchSize = 20,
-  debugTouchArea = true,
-  ...other
+  trackStyle,
+  thumbStyle,
 }) => {
-  const [state, setState] = useState({
-    containerSize: {
-      width: 0,
-      height: thumbTouchSize,
-    },
-    trackSize: {
-      width: 0,
-      height: thumbTouchSize,
-    },
-    thumbSize: {
-      width: thumbTouchSize,
-      height: thumbTouchSize,
-    },
-  });
-  const [value, setValue] = useState(val);
+  const [containerWidth, setContainerWidth] = useState(0);
+  const [sliderValue, setSliderValue] = useState(value);
+  const startXRef = useRef(0);
+  const translateX = useRef(new Animated.Value(0)).current;
 
+  // When the slider value or container width changes, update thumb position.
   useEffect(() => {
-    setValue(val);
-  }, [setValue, val]);
+    if (containerWidth > 0) {
+      const effectiveWidth = containerWidth - THUMB_SIZE;
+      const ratio = (sliderValue - minimumValue) / (maximumValue - minimumValue);
+      const newX = ratio * effectiveWidth;
+      translateX.setValue(newX);
+    }
+  }, [sliderValue, containerWidth, minimumValue, maximumValue, translateX]);
 
-  const _getValue = useCallback(
-    (dx: number) => {
-      const length = state.containerSize.width - state.thumbSize.width;
-      const ratio = dx / length;
-
-      if (step) {
-        return Math.max(
-          minimumValue,
-          Math.min(maximumValue, minimumValue + Math.round((ratio * (maximumValue - minimumValue)) / step) * step),
-        );
+  const calculateValue = useCallback(
+    (newX: number): number => {
+      const effectiveWidth = Math.max(0, containerWidth - THUMB_SIZE);
+      const ratio = Math.max(0, Math.min(1, startXRef.current + newX / effectiveWidth));
+      let newValue = ratio * (maximumValue - minimumValue) + minimumValue;
+      if (step > 0) {
+        newValue = Math.round(newValue / step) * step;
       }
-
-      return Math.max(minimumValue, Math.min(maximumValue, ratio * (maximumValue - minimumValue) + minimumValue));
+      return newValue;
     },
-    [minimumValue, maximumValue, step, state.containerSize, state.thumbSize],
+    [containerWidth, maximumValue, minimumValue, step],
   );
 
-  const touchOverflowStyle = useMemo(() => {
-    const width = Math.max(0, thumbTouchSize - state.thumbSize.width);
-    const height = Math.max(0, thumbTouchSize - state.containerSize.height);
-    const verticalMargin = -height / 2;
-    const horizontalMargin = -width / 2;
+  const handleChange = useCallback(
+    (x: number) => {
+      if (containerWidth <= 0) {
+        return;
+      }
+      const effectiveWidth = containerWidth - THUMB_SIZE;
+      // event.nativeEvent.locationX gives the tap position within the container.
+      const tapX = Math.max(0, Math.min(x, effectiveWidth));
+      translateX.setValue(tapX);
+      const newVal = calculateValue(tapX);
+      setSliderValue(newVal);
+      onValueChange?.(newVal);
+      onSlidingComplete?.(newVal);
+      startXRef.current = x;
+    },
+    [containerWidth, translateX, calculateValue, onValueChange, onSlidingComplete],
+  );
 
-    return {
-      marginTop: verticalMargin,
-      marginBottom: verticalMargin,
-      marginLeft: horizontalMargin,
-      marginRight: horizontalMargin,
-    };
-  }, [thumbTouchSize, state.thumbSize, state.containerSize]);
+  const handleSlideStart = useCallback(
+    (x: number) => {
+      onSlidingStart?.();
+      startXRef.current = x;
+    },
+    [onSlidingStart],
+  );
+
+  const panResponder = useMemo(
+    () =>
+      PanResponder.create({
+        onStartShouldSetPanResponder: () => true,
+        onMoveShouldSetPanResponder: () => true,
+        onPanResponderGrant: (e) => {
+          handleSlideStart(e.nativeEvent.pageX);
+        },
+        onPanResponderMove: (e) => {
+          handleChange(e.nativeEvent.pageX);
+        },
+        onPanResponderRelease: () => {
+          onSlidingComplete?.(sliderValue);
+        },
+        onPanResponderTerminate: () => {
+          onSlidingComplete?.(sliderValue);
+        },
+      }),
+    [handleSlideStart, handleChange, onSlidingComplete, sliderValue],
+  );
 
   return (
     <View
-      {...other}
-      style={[styles.container, style]}
+      style={styles.container}
       onLayout={(e) => {
-        setState({
-          ...state,
-          containerSize: {
-            width: e.nativeEvent.layout.width,
-            height: e.nativeEvent.layout.height,
-          },
-        });
+        setContainerWidth(e.nativeEvent.layout.width);
       }}
+      {...panResponder.panHandlers}
     >
-      <View
-        style={[styles.track, trackStyle]}
-        onLayout={(e) => {
-          setState({
-            ...state,
-            trackSize: {
-              width: e.nativeEvent.layout.width,
-              height: e.nativeEvent.layout.height,
-            },
-          });
-        }}
-      />
-      <Animated.View
-        style={[
-          styles.track,
-          trackStyle,
-          {
-            width: state.containerSize.width,
-          },
-        ]}
-      >
-        {debugTouchArea && (
-          <Animated.View
-            style={[
-              styles.activeArea,
-              {
-                width: state.containerSize.width * value,
-                height: state.trackSize.height,
-              },
-            ]}
-            pointerEvents="none"
-          />
-        )}
-      </Animated.View>
-      <Animated.View
-        style={[
-          styles.thumb,
-          thumbStyle,
-          {
-            transform: [
-              {
-                translateX: state.containerSize.width * value,
-              },
-            ],
-          },
-        ]}
-        onLayout={(e) => {
-          setState({
-            ...state,
-            thumbSize: {
-              width: e.nativeEvent.layout.width,
-              height: e.nativeEvent.layout.height,
-            },
-          });
+      <Pressable
+        style={styles.pressable}
+        onPress={(event) => {
+          handleChange(event.nativeEvent.pageX);
         }}
       >
-        {thumbImage && <Image source={thumbImage} />}
-      </Animated.View>
-      <View
-        style={[styles.touchArea, touchOverflowStyle]}
-        onResponderStart={() => {
-          onSlidingStart?.();
-        }}
-        onStartShouldSetResponder={() => true}
-        onMoveShouldSetResponder={() => true}
-        onResponderMove={(e) => {
-          console.log(e.nativeEvent.locationX);
-          if (disabled) {
-            return;
-          }
-
-          const newValue = _getValue(e.nativeEvent.locationX);
-
-          setValue(newValue);
-          onChangeValue?.(newValue);
-        }}
-        onResponderEnd={(e) => {
-          if (disabled) {
-            return;
-          }
-
-          setValue(_getValue(e.nativeEvent.locationX));
-          onSlidingComplete?.();
-        }}
-        onResponderTerminate={(e) => {
-          if (disabled) {
-            return;
-          }
-
-          setValue(_getValue(e.nativeEvent.locationX));
-          onSlidingComplete?.();
-        }}
-      />
+        {/* Track */}
+        <View style={[styles.track, trackStyle]} />
+        {/* Active Track */}
+        <Animated.View
+          style={[
+            styles.activeTrack,
+            trackStyle,
+            {
+              width: translateX,
+            },
+          ]}
+        />
+        <Animated.View
+          style={[
+            styles.thumbContainer,
+            {
+              transform: [{ translateX }],
+            },
+          ]}
+          hitSlop={{ top: 20, left: 20, right: 20, bottom: 20 }}
+        >
+          <View style={[styles.thumb, thumbStyle]} />
+        </Animated.View>
+      </Pressable>
     </View>
   );
 };
 
-export default MKRange;
+export default MKFormRange;

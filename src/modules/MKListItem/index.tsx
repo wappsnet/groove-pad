@@ -1,5 +1,7 @@
 import { FC } from 'react';
+
 import { TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
+
 import { styles } from './styles';
 
 interface MKListItemProps extends TouchableOpacityProps {

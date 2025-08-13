@@ -1,6 +1,9 @@
 import { FC, ReactNode } from 'react';
+
 import { View } from 'react-native';
+
 import MKAudioContainer from '../MKAudioProvider';
+
 import { styles } from './styles';
 
 type MKAudioPlayerProps = {
@@ -8,8 +11,7 @@ type MKAudioPlayerProps = {
   banner?: ReactNode;
 };
 
-const MKAudioPlayer: FC<MKAudioPlayerProps> = ({ uri, banner }) => {
-  return (
+const MKAudioPlayer: FC<MKAudioPlayerProps> = ({ uri, banner }) => (
     <View style={[styles.container]}>
       <MKAudioContainer uri={uri}>
         {({ status, sound }) => {
@@ -27,6 +29,5 @@ const MKAudioPlayer: FC<MKAudioPlayerProps> = ({ uri, banner }) => {
       </MKAudioContainer>
     </View>
   );
-};
 
 export default MKAudioPlayer;

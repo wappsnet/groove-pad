@@ -1,7 +1,11 @@
 import { FC } from 'react';
+
 import { PadDto } from 'store/slices/pads/types';
+
 import MKView from 'modules/MKView';
+
 import Pad from 'components/Pad';
+
 import { styles } from './styles';
 
 type BoardProps = {
@@ -9,8 +13,7 @@ type BoardProps = {
   pressPad: (id: string) => void;
 };
 
-const Board: FC<BoardProps> = ({ pads, pressPad }) => {
-  return (
+const Board: FC<BoardProps> = ({ pads, pressPad }) => (
     <MKView style={styles.boardContainer}>
       {pads.map((item) => (
         <MKView key={item.id} style={styles.boardItem}>
@@ -24,6 +27,5 @@ const Board: FC<BoardProps> = ({ pads, pressPad }) => {
       ))}
     </MKView>
   );
-};
 
 export default Board;

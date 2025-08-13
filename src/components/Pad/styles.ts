@@ -1,5 +1,6 @@
-import theme from 'assets/theme';
 import {StyleSheet} from "react-native";
+
+import theme from 'assets/theme';
 
 export default StyleSheet.create({
   container: {

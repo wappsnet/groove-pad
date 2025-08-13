@@ -1,4 +1,5 @@
 import { FC, useEffect, useRef } from 'react';
+
 import { Animated, ViewProps } from 'react-native';
 
 interface MKSlideProps extends ViewProps {
@@ -19,18 +20,18 @@ const MKSlide: FC<MKSlideProps> = ({ children, direction = 'right', duration = 5
     Animated.timing(animatedValue, {
       toValue: 1,
       duration,
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start();
-  }, [animatedValue]);
+  }, [animatedValue, duration]);
 
   return (
     <Animated.View
       style={{
         transform: [
           {
-            translateX: animatedValue
-          }
-        ]
+            translateX: animatedValue,
+          },
+        ],
       }}
     >
       {children}

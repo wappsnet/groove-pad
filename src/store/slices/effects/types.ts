@@ -1,4 +1,5 @@
 import { CategoryDto } from "store/slices/categories/types";
+
 import { InitialState } from "../../types";
 
 export interface EffectDto {

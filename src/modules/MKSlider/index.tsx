@@ -1,5 +1,7 @@
 import { FC, memo, ReactNode, useEffect, useRef, useState } from 'react';
+
 import { Animated, Dimensions, FlatList, FlatListProps, TouchableOpacity, View } from 'react-native';
+
 import { styles } from './styles';
 
 const { width } = Dimensions.get('window');
@@ -46,6 +48,7 @@ const MKSlider: FC<MKSliderProps> = ({
   autoplay,
   ...props
 }) => {
+  console.log(loop, duration, itemVisiblePercentThreshold, snapToAlignment, space);
   const autoTimeRef = useRef<number | null>(null);
   const flatListRef = useRef<FlatList<MKSliderDataProps>>(null);
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -55,7 +58,7 @@ const MKSlider: FC<MKSliderProps> = ({
     if (flatListRef.current) {
       flatListRef.current.scrollToIndex({
         animated: true,
-        index: activeSlide
+        index: activeSlide,
       });
     }
   }, [activeSlide]);
@@ -85,14 +88,14 @@ const MKSlider: FC<MKSliderProps> = ({
         window.clearInterval(autoTimeRef.current);
       }
     };
-  }, [autoplay, activeIndex]);
+  }, [autoplay, activeIndex, data.length]);
 
   const handleOnPrev = () => {
     if (activeIndex) {
       if (flatListRef.current) {
         flatListRef.current.scrollToIndex({
           animated: true,
-          index: activeIndex - 1
+          index: activeIndex - 1,
         });
       }
     }
@@ -103,7 +106,7 @@ const MKSlider: FC<MKSliderProps> = ({
       if (flatListRef.current) {
         flatListRef.current.scrollToIndex({
           animated: true,
-          index: activeIndex + 1
+          index: activeIndex + 1,
         });
       }
     }
@@ -130,7 +133,7 @@ const MKSlider: FC<MKSliderProps> = ({
           const translateY = scrollX.interpolate({
             inputRange,
             outputRange: [transformY * 2, transformY, transformY * 2],
-            extrapolate: 'clamp'
+            extrapolate: 'clamp',
           });
 
           return (
@@ -139,8 +142,8 @@ const MKSlider: FC<MKSliderProps> = ({
                 styles.item,
                 { width: size },
                 {
-                  transform: [{ translateY }]
-                }
+                  transform: [{ translateY }],
+                },
               ]}
             >
               {renderItem?.({ item, index, separators })}
@@ -154,7 +157,7 @@ const MKSlider: FC<MKSliderProps> = ({
         getItemLayout={(_data, index: number) => ({
           length: size,
           offset: size * (index - 1),
-          index
+          index,
         })}
         bounces={false}
         decelerationRate={0}
@@ -166,13 +169,13 @@ const MKSlider: FC<MKSliderProps> = ({
             [
               {
                 nativeEvent: {
-                  contentOffset: { x: scrollX }
-                }
-              }
+                  contentOffset: { x: scrollX },
+                },
+              },
             ],
             {
-              useNativeDriver: false
-            }
+              useNativeDriver: false,
+            },
           );
         }}
         {...props}

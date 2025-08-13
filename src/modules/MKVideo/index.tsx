@@ -1,7 +1,9 @@
 import { FC, useRef } from "react";
+
 import { Video, VideoProps } from "expo-av";
-import { styles } from "./styles";
 import { View } from "react-native";
+
+import { styles } from "./styles";
 
 type MVideoProps = {
   video: VideoProps;

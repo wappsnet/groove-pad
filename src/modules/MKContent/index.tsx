@@ -1,6 +1,9 @@
 import { FC, ReactNode } from 'react';
+
 import { ScrollView, View, ViewProps } from 'react-native';
+
 import MKSpinner from 'modules/MKSpinner';
+
 import { styles } from './styles';
 
 interface ContentProps extends ViewProps {
@@ -10,8 +13,7 @@ interface ContentProps extends ViewProps {
   onScrollBottom?: () => void;
 }
 
-const MKContent: FC<ContentProps> = ({ header, footer, children, onScrollBottom, loading = false, style = {} }) => {
-  return (
+const MKContent: FC<ContentProps> = ({ header, footer, children, onScrollBottom, loading = false, style = {} }) => (
     <View style={[styles.container, style]}>
       {header && (
         <View style={styles.header}>
@@ -43,6 +45,5 @@ const MKContent: FC<ContentProps> = ({ header, footer, children, onScrollBottom,
       )}
     </View>
   );
-};
 
 export default MKContent;

@@ -1,5 +1,7 @@
 import { Children, cloneElement, FC, isValidElement } from 'react';
+
 import { Modal, View, ModalProps, TouchableOpacity } from 'react-native';
+
 import { styles } from './styles';
 
 interface MKModalContainerProps extends ModalProps {

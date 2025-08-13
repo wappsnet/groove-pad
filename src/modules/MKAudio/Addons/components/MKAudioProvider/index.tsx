@@ -1,5 +1,7 @@
 import { FC, ReactNode, useEffect, useRef } from 'react';
+
 import { Audio } from 'expo-av';
+
 import { MKAudioDataProps } from '../../types';
 
 type MKAudioProviderProps = {

@@ -1,12 +1,14 @@
 import { FC } from "react";
+
 import { AlbumDto } from "store/slices/albums/types";
-import MKTypo from "modules/MKTypo";
+
 import BkgImage from "modules/MKImage";
+import MKTypo from "modules/MKTypo";
 import MKView from "modules/MKView";
+
 import { styles } from "./styles";
 
-const AlbumItem: FC<AlbumDto> = ({ name, authors, description, image }) => {
-  return (
+const AlbumItem: FC<AlbumDto> = ({ name, authors, description, image }) => (
     <MKView style={styles.container}>
       <BkgImage
         style={styles.image}
@@ -23,6 +25,5 @@ const AlbumItem: FC<AlbumDto> = ({ name, authors, description, image }) => {
       </MKView>
     </MKView>
   );
-};
 
 export default AlbumItem;

@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+
 import { MKThemeStyles } from '../MKTheme/styles';
 
 export const styles = StyleSheet.create({

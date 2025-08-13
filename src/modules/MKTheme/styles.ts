@@ -1,7 +1,7 @@
 export const MKThemeStyles = {
   //colors
   colorBrandPrimary: '#6666ff',
-  colorBrandSecondary: '#ffffff',
+  colorBrandSecondary: '#2f015b',
   colorBrandTertiary: '#a28bb9',
   colorInfoSuccess: '#0ca907',
   colorInfoDanger: '#FF3B30',

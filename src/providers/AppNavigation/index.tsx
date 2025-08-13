@@ -1,15 +1,17 @@
 import { FC } from 'react';
+
 import { NavigationContainer, Theme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ROUTES } from 'definitions/routes';
+
 import { APP_ID } from 'definitions/configs';
-import MainScreen from 'screens/MainScreen';
+import { ROUTES } from 'definitions/routes';
+
 import AlbumsScreen from 'screens/AlbumsScreen';
+import MainScreen from 'screens/MainScreen';
 
 const Stack = createNativeStackNavigator();
 
-const AppNavigation: FC<{ theme: Theme }> = ({ theme }) => {
-  return (
+const AppNavigation: FC<{ theme: Theme }> = ({ theme }) => (
     <NavigationContainer
       theme={theme}
       linking={{
@@ -33,6 +35,5 @@ const AppNavigation: FC<{ theme: Theme }> = ({ theme }) => {
       </Stack.Navigator>
     </NavigationContainer>
   );
-};
 
 export default AppNavigation;

@@ -1,7 +1,9 @@
 import { FC } from 'react';
-import { SvgXml } from 'react-native-svg';
-import { MKThemeStyles } from 'modules/MKTheme/styles';
+
 import { ViewProps } from 'react-native';
+import { SvgXml } from 'react-native-svg';
+
+import { MKThemeStyles } from 'modules/MKTheme/styles';
 
 interface MKCustomIconProps extends ViewProps {
   icon: string;

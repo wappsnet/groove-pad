@@ -1,5 +1,5 @@
-import { AxiosError } from 'axios';
 import { ActionReducerMapBuilder, AsyncThunk, Draft, PayloadAction } from '@reduxjs/toolkit';
+import { AxiosError } from 'axios';
 
 import { AsyncThunkConfig, InitialState, StoreLoadingEnum } from 'store/types';
 
@@ -63,9 +63,7 @@ export const createExtraReducer = <S extends InitialState, T extends AsyncThunk<
       state.error = null;
       state.loading = StoreLoadingEnum.pending;
 
-      if (!state.request) {
-        state.request = {};
-      }
+      state.request ??= {};
 
       state.request[hash] = action.meta.requestId;
 

@@ -1,14 +1,17 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
+
+import { useNavigation } from '@react-navigation/core';
 import { Text } from 'react-native';
-import MKTypo from 'modules/MKTypo';
+
 import MKButton from 'modules/MKButton';
 import MKIcon from 'modules/MKIcon';
+import MKTypo from 'modules/MKTypo';
 import MKView from 'modules/MKView';
+
 import { styles } from './styles';
-import { useNavigation } from '@react-navigation/core';
 
 interface AppHeaderProps {
-  title?: string;
+  title?: ReactNode;
   back?: boolean;
 }
 
@@ -29,7 +32,7 @@ const AppHeader: FC<AppHeaderProps> = ({ title, back = false }) => {
         )}
       </MKView>
       <Text style={styles.middle}>
-        <MKTypo type="h1" truncate>
+        <MKTypo type="h3" truncate>
           {title}
         </MKTypo>
       </Text>

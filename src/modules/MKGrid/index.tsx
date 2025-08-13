@@ -1,5 +1,5 @@
-import MKRow from './Addons/components/MKRow';
 import MKCol from './Addons/components/MKCol';
+import MKRow from './Addons/components/MKRow';
 
 const MKGrid = {
   Row: MKRow,

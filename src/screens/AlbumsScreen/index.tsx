@@ -1,17 +1,24 @@
 import { FC, useEffect } from 'react';
-import { useAppDispatch } from 'hooks/useAppDispatch';
-import { useAppSelector } from 'hooks/useAppSelector';
+
+import { FormattedMessage } from 'react-intl';
+
 import { getAlbums, getAlbumsIsLoading, getAlbumsThunk } from 'store/slices/albums';
 import { AlbumDto } from 'store/slices/albums/types';
-import MKScreen from 'modules/MKScreen';
+
+import { APP_MESSAGES } from 'assets/lang/messages';
+
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { useAppSelector } from 'hooks/useAppSelector';
+
 import MKFlat from 'modules/MKFlat';
 import MKListItem from 'modules/MKListItem';
-import AlbumItem from './item';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import AppHeader from 'containers/AppHeader';
-import Intl from 'services/intl';
+import MKScreen from 'modules/MKScreen';
 
-const AlbumsScreen: FC<NativeStackScreenProps<{}>> = () => {
+import AppHeader from 'containers/AppHeader';
+
+import AlbumItem from './item';
+
+const AlbumsScreen: FC = () => {
   const dispatch = useAppDispatch();
   const albums = useAppSelector(({ albums }) => getAlbums(albums));
   const loading = useAppSelector(({ albums }) => getAlbumsIsLoading(albums));
@@ -27,7 +34,7 @@ const AlbumsScreen: FC<NativeStackScreenProps<{}>> = () => {
   return (
     <MKScreen>
       <MKScreen.Header>
-        <AppHeader title={Intl.t('screens.albums.header')} back />
+        <AppHeader title={<FormattedMessage {...APP_MESSAGES.albums} />} back />
       </MKScreen.Header>
       <MKScreen.Body>
         <MKFlat<AlbumDto>

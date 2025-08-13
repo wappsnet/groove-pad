@@ -1,6 +1,9 @@
 import { FC } from 'react';
+
 import { TextInput, TextInputProps } from 'react-native';
+
 import theme from 'assets/theme';
+
 import { styles } from './styles';
 
 interface MKEmailInputProps extends TextInputProps {
@@ -18,8 +21,7 @@ const MKEmailInput: FC<MKEmailInputProps> = ({
   handleChange,
   style = {},
   ...props
-}) => {
-  return (
+}) => (
     <TextInput
       style={[styles.input, style, isInvalid && theme.form.error, isValid && theme.form.success]}
       onChangeText={handleChange}
@@ -32,6 +34,5 @@ const MKEmailInput: FC<MKEmailInputProps> = ({
       {...props}
     />
   );
-};
 
 export default MKEmailInput;

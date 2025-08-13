@@ -1,4 +1,5 @@
 import { AsyncStorage } from 'react-native';
+
 import { StorageKeyEnum } from './types';
 
 export const MKCache = {

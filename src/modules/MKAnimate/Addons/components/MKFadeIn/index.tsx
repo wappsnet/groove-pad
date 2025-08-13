@@ -1,4 +1,5 @@
 import { FC, useEffect, useRef } from 'react';
+
 import { Animated, ViewProps } from 'react-native';
 
 interface MKFadeInProps extends ViewProps {
@@ -12,14 +13,14 @@ const MKFadeIn: FC<MKFadeInProps> = ({ children, duration = 1000 }) => {
     Animated.timing(animatedValue, {
       toValue: 1,
       duration,
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start();
-  }, [animatedValue]);
+  }, [animatedValue, duration]);
 
   return (
     <Animated.View
       style={{
-        opacity: animatedValue
+        opacity: animatedValue,
       }}
     >
       {children}

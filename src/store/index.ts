@@ -1,8 +1,9 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { configsSlice } from 'store/slices/configs';
-import { authorsSlice } from 'store/slices/authors';
+
 import { albumsSlice } from 'store/slices/albums';
+import { authorsSlice } from 'store/slices/authors';
 import { categoriesSlice } from 'store/slices/categories';
+import { configsSlice } from 'store/slices/configs';
 import { effectsSlice } from 'store/slices/effects';
 import { musicsSlice } from 'store/slices/musics';
 import { padsSlice } from 'store/slices/pads';

@@ -1,7 +1,10 @@
 import { FC, useState, createRef } from 'react';
+
 import { range } from 'lodash';
 import { Text, View, TextInput, TouchableWithoutFeedback } from 'react-native';
+
 import theme from 'assets/theme';
+
 import { styles } from './styles';
 
 const DIGITS_COUNT = 6;

@@ -1,9 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { MKApiError, StoreLoadingEnum } from 'store/types';
-import { LanguagesEnum, ConfigsDto, TipDto, InitialStateDto } from './types';
-import { ConfigsApi } from './api';
+
 import { createApiError, createExtraReducer } from 'store/helpers';
-import configs from 'assets/mocks/configs';
+import { MKApiError, StoreLoadingEnum } from 'store/types';
+
+import configs from 'assets/mocks/configs.json';
+
+import { ConfigsApi } from './api';
+import { LanguagesEnum, ConfigsDto, TipDto, InitialStateDto } from './types';
 
 /**
  * Initial State

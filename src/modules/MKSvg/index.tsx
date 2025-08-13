@@ -1,8 +1,10 @@
-import { SvgXml } from "react-native-svg";
 import * as React from "react";
 import { FC } from "react";
-import { MKThemeStyles } from "../MKTheme/styles";
+
 import { StyleProp, ViewStyle } from "react-native";
+import { SvgXml } from "react-native-svg";
+
+import { MKThemeStyles } from "../MKTheme/styles";
 
 interface MKSvgProps {
   icon: string;
@@ -10,8 +12,7 @@ interface MKSvgProps {
   style?: StyleProp<ViewStyle>;
 }
 
-const MKSvg: FC<MKSvgProps> = ({ icon, size, style }) => {
-  return (
+const MKSvg: FC<MKSvgProps> = ({ icon, size, style }) => (
     <SvgXml
       xml={icon
         .replace(/colors.primary/g, MKThemeStyles.colorBrandPrimary)
@@ -21,6 +22,5 @@ const MKSvg: FC<MKSvgProps> = ({ icon, size, style }) => {
       height={size}
     />
   );
-};
 
 export default MKSvg;

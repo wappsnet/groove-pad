@@ -1,11 +1,9 @@
-import { useContext, useEffect, FC } from "react";
-import { MKPortalContext } from "../../definitions";
-import { MKPortalConsumerProps } from "../../types";
+import { useContext, useEffect, FC } from 'react';
 
-const MKPortalConsumer: FC<MKPortalConsumerProps> = ({
-  gateName,
-  children,
-}) => {
+import { MKPortalContext } from '../../definitions';
+import { MKPortalConsumerProps } from '../../types';
+
+const MKPortalConsumer: FC<MKPortalConsumerProps> = ({ gateName, children }) => {
   const portal = useContext(MKPortalContext);
 
   useEffect(() => {
@@ -14,7 +12,7 @@ const MKPortalConsumer: FC<MKPortalConsumerProps> = ({
     return () => {
       portal.teleport(gateName, null);
     };
-  }, [children]);
+  }, [children, gateName, portal]);
 
   return null;
 };

@@ -1,6 +1,9 @@
 import React, { ReactNode } from "react";
+
 import { View, SectionList, SectionListProps } from "react-native";
+
 import MKSpinner from "modules/MKSpinner";
+
 import { styles } from "./styles";
 
 interface FlatContentProps<T> extends SectionListProps<T> {
@@ -21,8 +24,7 @@ const MKFlat = <T,>({
   onEndReached,
   style = {},
   empty,
-}: FlatContentProps<T>) => {
-  return (
+}: FlatContentProps<T>) => (
     <View style={[styles.container, style]}>
       {header ? (
         <View style={styles.header}>
@@ -65,6 +67,5 @@ const MKFlat = <T,>({
       )}
     </View>
   );
-};
 
 export default MKFlat;

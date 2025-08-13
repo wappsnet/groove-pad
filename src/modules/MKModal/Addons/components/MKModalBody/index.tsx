@@ -1,5 +1,7 @@
 import { FC } from 'react';
+
 import { View, ViewProps } from 'react-native';
+
 import { styles } from './styles';
 
 interface MKModalBodyProps extends ViewProps {
@@ -8,7 +10,7 @@ interface MKModalBodyProps extends ViewProps {
   close: () => void;
 }
 
-const MKModalBody: FC<MKModalBodyProps> = ({ children, close, showCloseButton, ...props }) => (
+const MKModalBody: FC<MKModalBodyProps> = ({ children, ...props }) => (
   <View style={styles.container} {...props}>
     {children}
   </View>

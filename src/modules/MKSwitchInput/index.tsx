@@ -1,7 +1,8 @@
-import { FC, ReactNode } from "react";
-import { Text, SwitchProps, Switch } from "react-native";
-import { TouchableOpacity } from "react-native";
-import { styles } from "./styles";
+import { FC, ReactNode } from 'react';
+
+import { Text, SwitchProps, Switch, TouchableOpacity } from 'react-native';
+
+import { styles } from './styles';
 
 interface MKSwitchInputProps extends SwitchProps {
   isValid?: boolean;
@@ -22,16 +23,19 @@ const MKSwitchInput: FC<MKSwitchInputProps> = ({
   isValid,
   handleChange,
   ...props
-}) => (
-  <TouchableOpacity
-    onPress={() => {
-      handleChange(!value);
-    }}
-    style={styles.container}
-  >
-    {!!label && <Text style={styles.label}>{label}</Text>}
-    <Switch {...props} />
-  </TouchableOpacity>
-);
+}) => {
+  console.log(icon, checked, isValid, isInvalid);
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        handleChange(!value);
+      }}
+      style={styles.container}
+    >
+      {!!label && <Text style={styles.label}>{label}</Text>}
+      <Switch {...props} />
+    </TouchableOpacity>
+  );
+};
 
 export default MKSwitchInput;

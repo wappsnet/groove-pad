@@ -1,8 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { MKApiError, StoreLoadingEnum } from 'store/types';
+
 import { createApiError, createExtraReducer, getSliceLoadingState } from 'store/helpers';
-import { EffectDto, InitialStateDto } from './types';
+import { MKApiError, StoreLoadingEnum } from 'store/types';
+
 import { EffectsApi } from './api';
+import { EffectDto, InitialStateDto } from './types';
 
 /**
  * Initial State

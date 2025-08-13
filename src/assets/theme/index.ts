@@ -1,7 +1,7 @@
 import colors from './colors';
 import form from './form';
-import shadows from './shadows';
 import layout from './layout';
+import shadows from './shadows';
 
 export default {
   colors,

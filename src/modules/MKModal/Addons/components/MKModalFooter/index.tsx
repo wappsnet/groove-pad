@@ -1,5 +1,7 @@
 import { FC } from 'react';
+
 import { View, ViewProps } from 'react-native';
+
 import { styles } from './styles';
 
 interface MKModalFooterProps extends ViewProps {
@@ -7,7 +9,7 @@ interface MKModalFooterProps extends ViewProps {
   showCloseButton?: boolean;
 }
 
-const MKModalFooter: FC<MKModalFooterProps> = ({ children, showCloseButton, ...props }) => (
+const MKModalFooter: FC<MKModalFooterProps> = ({ children, ...props }) => (
   <View style={styles.container} {...props}>
     {children}
   </View>

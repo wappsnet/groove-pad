@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+
 import { MKThemeStyles } from 'modules/MKTheme/styles';
 
 export const styles = StyleSheet.create({
@@ -16,6 +17,6 @@ export const styles = StyleSheet.create({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: MKThemeStyles.colorBrandSecondary,
+    backgroundColor: MKThemeStyles.colorContentSecondary,
   },
 });

@@ -1,4 +1,4 @@
-import { InitialState } from "../../types";
+import { InitialState } from 'store/types';
 
 export interface AuthorDto {
   id: number;

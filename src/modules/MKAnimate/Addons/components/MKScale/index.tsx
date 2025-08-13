@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
+
 import { Animated, ViewProps } from 'react-native';
 
 interface MKScaleProps extends ViewProps {
@@ -12,18 +13,18 @@ const MKScale: FC<MKScaleProps> = ({ children, duration = 1000 }) => {
     Animated.timing(animatedValue, {
       toValue: 1,
       duration,
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start();
-  }, [animatedValue]);
+  }, [animatedValue, duration]);
 
   return (
     <Animated.View
       style={{
         transform: [
           {
-            scale: animatedValue
-          }
-        ]
+            scale: animatedValue,
+          },
+        ],
       }}
     >
       {children}
